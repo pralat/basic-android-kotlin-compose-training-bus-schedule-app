@@ -10,14 +10,14 @@ abstract class BusScheduleDatabase : RoomDatabase() {
     abstract fun busScheduleDao(): BusScheduleDao
     companion object {
         @Volatile
-        private var Instance: BusScheduleDatabase? = null
+        private var INSTANCE: BusScheduleDatabase? = null
 
         fun getDatabase(context: Context): BusScheduleDatabase {
-            return Instance ?: synchronized(this) {
+            return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(context, BusScheduleDatabase::class.java, "app_database")
                     .createFromAsset("database/bus_schedule.db")
                     .build()
-                    .also { Instance = it }
+                    .also { INSTANCE = it }
             }
         }
     }
